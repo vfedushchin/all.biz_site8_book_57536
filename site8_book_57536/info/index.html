@@ -1,0 +1,100 @@
+{extends file="../index.html"}
+{block name=article}
+
+
+<section  class="information-information ">
+    <div class="row">
+        <div id="content" class=" col-sm-12 ">
+            <div class="breadcrumb">
+                {if $BREADCRUMBS} {foreach from=$BREADCRUMBS item=item key=key}
+                <span class="b-bread-list__item" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                        {if not $item@last}
+                            <span class="b-link b-bread-list__link" onclick="location.href='{$item.href}'" title="" itemprop="url"><span itemprop="title">{$item.name|escape:"html"}</span></span><span class="b-bread-list__separator"></span> {else} {if $item@first}<strong>{/if}<span class="b-bread-list__link" title="" itemprop="title">{$item.name|escape:"html"}</span>{if $item@first}</strong>{/if} {/if}
+                </span>
+                {/foreach} {/if}
+            </div>
+
+
+
+            <h1 class="text-center">About</h1>
+    <div class="text-center">
+        <h4>Catering to your requirements, handling your needs with care</h4>
+        <p>Our store is more than just another average online retailer. We sell not only top quality products, but give our customers a positive online shopping experience. Forget about struggling to do everything at once: taking care of the family, running your business, walking your dog, cleaning the house, doing the shopping, etc. Purchase the goods you need every day or just like in a few clicks or taps, depending on the device you use to access the Internet. We work to make your life more enjoyable.</p>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="count-box"><strong>14500</strong>
+                    <h5>Products available</h5>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="count-box"><strong>81%</strong>
+                    <h5>Clients come back</h5>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="count-box"><strong>10 mlns</strong>
+                    <h5>Site members</h5>
+                </div>
+            </div>
+        </div>
+        <h3>Store Events</h3>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="icon-box"><i class="material-design-search100"></i>
+                    <h5>For convenience of choice</h5>
+                    <p>We think about the convenience of your choice. Our products are supplied with star rating that should help hesitant buyers to take a decision. What’s more, you can search our site if you know exactly what you are looking for or use a bunch of different filters that will considerably save your time and efforts.</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="icon-box"><i class="material-design-front16"></i>
+                    <h5>Delivery to all regions</h5>
+                    <p>We deliver our goods worldwide. No matter where you live, your order will be shipped in time and delivered right to your door or to any other location you have stated. The packages are handled with utmost care, so the ordered products will be handed to you safe and sound, just like you expect them to be.</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="icon-box"><i class="material-design-thumb54"></i>
+                    <h5>The highest quality of products</h5>
+                    <p>We guarantee the highest quality of the products we sell. Several decades of successful operation and millions of happy customers let us feel certain about that. Besides, all items we sell pass thorough quality control, so no characteristics mismatch can escape the eye of our professionals.</p>
+                </div>
+            </div>
+        </div>
+        <h3>Our Team</h3>
+        <div class="row">
+            <div class="col-sm-3">
+                <figure class="thumbnail featured-thumbnail">
+                    <a title="Robert Johnson" href="#"><img alt="Robert Johnson" src="{$template}/image/article-1.jpg"></a>
+                </figure>
+                <h5><a title="Robert Johnson" href="index.php?route=information/information&amp;information_id=7">Robert Johnson</a></h5>
+                <p>Senior salesman with 15 years of experience. He knows everything about the products he offers.</p>
+            </div>
+            <div class="col-sm-3">
+                <figure class="thumbnail featured-thumbnail">
+                    <a title="Sam Kromstain" href="#"><img alt="Sam Kromstain" src="{$template}/image/article-3.jpg"></a>
+                </figure>
+                <h5><a title="Sam Kromstain" href="index.php?route=information/information&amp;information_id=9">Sam Kromstain</a></h5>
+                <p>Wholesale manager. Contact him if you want to buy a batch of the products offered at our store.</p>
+            </div>
+            <div class="col-sm-3">
+                <figure class="thumbnail featured-thumbnail">
+                    <a title="Edna Barton" href="#"><img alt="Edna Barton" src="{$template}/image/article-4.jpg"></a>
+                </figure>
+                <h5><a title="Edna Barton" href="index.php?route=information/information&amp;information_id=10">Edna Barton</a></h5>
+                <p>Quality control manager. Her mission is to check the products we ship and settle quality issues if any.</p>
+            </div>
+            <div class="col-sm-3">
+                <figure class="thumbnail featured-thumbnail">
+                    <a title="Jessica Priston" href="#"><img alt="Jessica Priston" src="{$template}/image/article-2.jpg"></a>
+                </figure>
+                <h5><a title="Jessica Priston" href="index.php?route=information/information&amp;information_id=8">Jessica Priston</a></h5>
+                <p>Mega positive shop assistant always ready to help you make the right choice and charm you with a smile.</p>
+            </div>
+        </div>
+    </div>
+
+
+
+        </div>
+    </div>
+</section>
+
+{/block}

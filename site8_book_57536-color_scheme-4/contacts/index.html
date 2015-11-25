@@ -1,0 +1,159 @@
+{extends file="../index.html"}
+{block name=title}Contacts{/block}
+{block name=article}
+    {strip}
+
+
+<div class="breadcrumb">
+    {if $BREADCRUMBS} {foreach from=$BREADCRUMBS item=item key=key}
+    <span class="b-bread-list__item" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                        {if not $item@last}
+                            <span class="b-link b-bread-list__link" onclick="location.href='{$item.href}'" title="" itemprop="url"><span itemprop="title">{$item.name|escape:"html"}</span></span><span class="b-bread-list__separator"><!-- <i class="fa fa-angle-double-right"></i> --></span> {else} {if $item@first}<strong>{/if}<span class="b-bread-list__link" title="" itemprop="title">{$item.name|escape:"html"}</span>{if $item@first}</strong>{/if} {/if}
+    </span>
+    {/foreach} {/if}
+</div>
+<div class="row">
+    <div id="content" class="col-sm-12 col-sm-12 ">
+        <h1>Наши контакты</h1>
+        <div class="contact-info">
+            <div class="content row">
+                <div class="map-left col-sm-12">
+
+                    <div class="map-content">
+                        <div id="google-map" class="map_model"  data-x="{$company.longitude}" data-y="{$company.latitude}" data-zoom="15"></div>
+                        <ul class="map_locations">
+                            <li data-x="{$company.longitude}" data-y="{$company.latitude}" data-basic="{$template}/image/marker_map.png" data-active="{$template}/image/marker_map_active.png">
+                                <p> Позвоните нам <span><a href="callto:{$company.phone}">{$company.phone}</a></span></p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="b-contacts-data">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h4 class="b-contact-description-head"><strong>{$props->get('lng.address')|escape:'html'}</strong></h4>
+                                <p class="b-contacts-data-content adr" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                                    {if $company.is_custom_data}
+                                    <span itemprop="addressLocality"><span class="country-name">{$company.custom_data.country}</span>, {if $company.custom_data.city
+                                    <> $company.custom_data.region}<span class="region">{$company.custom_data.region}</span>,&nbsp;{/if}<span class="locality">{$company.custom_data.city}</span></span>,
+                                        <span class="street-address" itemprop="streetAddress">{$company.custom_data.address}</span> {else}
+                                        <span itemprop="addressLocality"><span class="country-name">{$props->get('lng.country_name')}</span>, {if $company.city
+                                        <> $company.region}<span class="region">{$company.region}</span>,&nbsp;{/if}<span class="locality">{$company.city}</span></span>, {if $company.zipcode}<span class="postal-code" itemprop="postalCode">{$company.zipcode}</span>, {/if}
+                                            <span class="street-address" itemprop="streetAddress">{$company.address}</span> {/if}
+                                </p>
+                                {if ($company.chief_name)}
+                                <h4 class="b-contact-description-head"><strong>{$props->get('lng.chief')}</strong></h4>
+                                <p class="b-contacts-data-content">{$company.chief_name|escape:'html'}</p>
+                                {/if} {if ($company.numbers.department)}
+                                <h4 class="b-contact-description-head"><strong>{$props->get('lng.enterprise_phones')}</strong></h4>
+                                <p class="b-contacts-data-content">
+                                    <table cellpadding="0" cellspacing="0" class="b-contacts-data-content">
+                                        <tbody>
+                                            {foreach from=$company.numbers.department item=department}
+                                            <tr>
+                                                <td class="b-contact-description-title">{$department.name}&nbsp;</td>
+                                                <td>
+                                                    {foreach from=$department.types item=type_info} {$type_info.name|lower}:&nbsp; {assign var="is_codes" value="0"} {foreach from=$type_info.codes key=n_code item=number_info} {if $is_codes},&nbsp;{/if}
+                                                    <span class="b-contacts-data-phone tel" itemprop="telephone">{$company.numbers.country_phone_code} ({$n_code|escape:'html'}) {$number_info.number|escape:'html'}</span> {assign var="is_codes" value="1"} {/foreach}
+                                                    <br /> {/foreach}
+                                                </td>
+                                            </tr>
+                                            {/foreach}
+                                        </tbody>
+                                    </table>
+                                    {if $onePhone}
+                                    <noindex><a class="b-link b-link_contacts" href="{$HREF_PHONES}" title="">{$props->get('lng.show_phones')}</a></noindex>
+                                    {else} {if (!$company.isPaid)}
+                                    <div class="b-contacts__discount">{$props->get('lng.use_feedback_form')}</div>{/if} {/if} {/if}
+                            </div>
+                            <div class="col-sm-6">
+                                {if ($company.timetable.is_show_timetable)} {if ($company.isPaid)}
+                                <h4 class="b-contact-description-head"><strong>{$props->get('lng.timetable')} ({$props->get('lng.time')} {$props->get('lng.country_name')} {$CUR_COMPANY_TIME})</strong></h4>
+                                <p class="b-contacts-data-content">
+                                    <table cellpadding="0" cellspacing="0" class="b-contacts-data-content b-timetable-output">
+                                        <tbody>
+                                            {if (1 == $FIRST_DAY_OF_WEEK)} {* По умолчанию первый день недели понедельник *} {if $company.timetable.combine_type}
+                                            <tr>
+                                                <td class="b-contact-description-title">
+                                                    {section name=day_id start=1 loop=$company.timetable.combine_type + 1 step=1} {$DAYS_OF_WEEK[$smarty.section.day_id.index-1]}&nbsp;&nbsp;
+                                                    <br /> {/section}
+                                                </td>
+                                                <td class="b-timetable-combine_type{if ($company.timetable.freedays[$smarty.section.day_id.index-1])} b-timetable-combine_type_free{/if}">
+                                                    <div class="b-timetable-combine_type"></div>
+                                                </td>
+                                                <td>&nbsp;
+                                                    <span class="b-contacts-data-phone">{$company.timetable.default}</span>
+                                                </td>
+                                            </tr>
+                                            {/if} {foreach from=$company.timetable.timetable item=timetable key=day_id}
+                                            <tr>
+                                                <td class="b-contact-description-title">{$DAYS_OF_WEEK[$day_id-1]}&nbsp;&nbsp;</td>
+                                                <td>
+                                                    {if ($company.timetable.freedays[$day_id])}
+                                                    <div class="b-timetable-free_type"></div>
+                                                    {else}
+                                                    <div class="b-timetable-work_type"></div>
+                                                    {/if}
+                                                </td>
+                                                <td>&nbsp;
+                                                    <span class="b-contacts-data-phone">{$timetable}</span>
+                                                </td>
+                                            </tr>
+                                            {/foreach} {else} {* По умолчанию первый день недели НЕ понедельник *} {section name=day_id start=1 loop=8 step=1} {assign var=cur_day value=($smarty.section.day_id.index+$FIRST_DAY_OF_WEEK)%7}
+                                            <tr>
+                                                <td class="b-contact-description-title">{$DAYS_OF_WEEK[$cur_day-1]}</td>
+                                                <td>
+                                                    {if ($company.timetable.freedays[$cur_day])}
+                                                    <div class="b-timetable-free_type"></div>
+                                                    {else}
+                                                    <div class="b-timetable-work_type"></div>
+                                                    {/if}
+                                                </td>
+                                                <td>
+                                                    <span class="b-contacts-data-phone">{$timetable}
+                                            {if $company.timetable.timetable[$cur_day]}
+                                                {$company.timetable.timetable[$cur_day]}
+                                            {else}
+                                                {$company.timetable.default}
+                                            {/if}
+                                            </span>
+                                                </td>
+                                            </tr>
+                                            {/section} {/if}
+                                        </tbody>
+                                    </table>
+                                </p>
+                                {/if} {/if}
+                                <h4 class="b-contact-description-head"><strong>{$props->get('lng.internet')}</strong></h4>
+                                <table cellpadding="0" cellspacing="0" class="b-contacts-data-content">
+                                    <tbody>
+                                        {if ($company.isPaid) && $company.email && !$hide_email_status}
+                                        <tr>
+                                            <td class="b-contact-description-title">Email</td>
+                                            <td><a class="b-link b-link_contacts email" href="mailto:{$company.email|escape:'hex'}" title="" itemprop="email">{$company.email|escape:"hexentity"}</a></td>
+                                        </tr>
+                                        {/if} {if ($company.isPaid) or $show_url} {include file="../default/contacts_url.html"} {/if}
+                                        <tr>
+                                            <td class="b-contact-description-title">{$props->get('lng.site')}</td>
+                                            <td><a class="b-link b-link_contacts" href="{$props->get('path.ent_domain')}" target="_blank">{$props->get('path.ent_domain')}</a></td>
+                                        </tr>
+                                        {foreach from=$company.messengers item=messenger}
+                                        <tr>
+                                            <td class="b-contact-description-title">{$messenger.em_name|escape:'html'}</td>
+                                            <td><span class="b-link_contacts">{$messenger.em_val|escape:'html'}</span></td>
+                                        </tr>
+                                        {/foreach}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    {/strip}
+{/block}

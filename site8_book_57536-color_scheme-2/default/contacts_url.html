@@ -1,0 +1,24 @@
+{if $company.url}
+<tr>
+    <td class="b-contact-description-title">{$props->get('lng.site')}:&nbsp;&nbsp;</td>
+    <td><a class="b-link b-link_contacts url" href="{$company.url_click}" target="_blank" title="" itemprop="url">{$company.url|escape:'html'}</a></td>
+</tr>
+{/if}
+{if $company.url1}
+<tr>
+    <td class="b-contact-description-title">{$props->get('lng.site')}:&nbsp;&nbsp;</td>
+    <td><a class="b-link b-link_contacts" href="{$company.url1_click}" target="_blank" title="">{$company.url1|escape:'html'}</a></td>
+</tr>
+{/if}
+{if $company.url2}
+<tr>
+    <td class="b-contact-description-title">{$props->get('lng.site')}:&nbsp;&nbsp;</td>
+    <td><a class="b-link b-link_contacts" href="{$company.url2_click}" target="_blank" title="">{$company.url2|escape:'html'}</a></td>
+</tr>
+{/if}
+{if $company.url3}
+<tr>
+    <td class="b-contact-description-title">{$props->get('lng.site')}:&nbsp;&nbsp;</td>
+    <td><a class="b-link b-link_contacts" href="{$company.url3_click}" target="_blank" title="">{$company.url3|escape:'html'}</a></td>
+</tr>
+{/if}

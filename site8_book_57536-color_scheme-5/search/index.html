@@ -1,0 +1,42 @@
+{extends file="../index.html"}
+{block name=title}Default Title{/block}
+{block name=article}
+    <section class="b-content-block">
+        <div class="b-content-title">
+            <h2 class="b-content-title__text">{$SECTION_NAME}</h2>
+        </div>
+
+        {if $TOTAL_POSITIONS}
+            <div class="b-search-founded">
+                {$props->get('lng.found_positions')}: <strong>{$TOTAL_POSITIONS}</strong>
+            </div>
+        {/if}
+
+        {if $LIST_BLOCKS}
+            <ul class="b-search--results">
+                {foreach from=$LIST_BLOCKS item=item key=key}
+                    <li class="b-search--results-item">
+                        <h4 class="b-search--results-item__name">
+                            <a href="{$item.href}">{$item.product_name}</a>
+                        </h4>
+                        <a class="b-search--results-item__section" href="{$item.hrefTosection}">{$item.section}</a>
+                    </li>
+                {/foreach}
+            </ul>
+            <nav class="b-paging">
+                {$PAGE_MENU}
+            </nav>
+
+        {else}
+            <div class="b-search-founded">
+                <strong>{$props->get('lng.information_by_query_is_absent')}</strong>
+                <div class="b-search-recommendations">
+                    <strong>{$props->get('lng.recommendations')}</strong><br>
+                    - {$props->get('lng.check_up_correctness_writing_keywords')}<br>
+                    - {$props->get('lng.try_to_use_others_probably_more_popular_keywords')}<br>
+                    - <a href="{$HREF_GLOBAL_SEARCH}">{$props->get('lng.global_search')}</a>
+                </div>
+            </div>
+        {/if}
+    </section>
+{/block}

@@ -1,0 +1,55 @@
+.vide * + .link, .rd-video_cnt * + .link {
+  margin-top: 29px;
+}
+.vide h2 + p, .rd-video_cnt h2 + p {
+  margin-top: 13px;
+}
+
+.inset {
+  padding-top: 139px;
+  padding-bottom: 65px;
+}
+
+.vide_cnt {
+  position: relative;
+}
+
+.vide h2, .vide p, .rd-video_cnt h2, .rd-video_cnt p {
+  margin: 0;
+}
+.vide, .vide h2, .rd-video_cnt, .rd-video_cnt h2 {
+  color: #fff;
+}
+.vide h2, .rd-video_cnt h2 {
+  font-size: 72px;
+  line-height: 87px;
+  letter-spacing: 1.8px;
+}
+.vide h2 span:first-child, .rd-video_cnt h2 span:first-child {
+  text-transform: uppercase;
+  letter-spacing: 5.4px;
+}
+.vide h2 br + span, .rd-video_cnt h2 br + span {
+  color: #f57a43;
+}
+.vide p, .rd-video_cnt p {
+  max-width: 530px;
+}
+
+/*========================================================
+                   Responsive Video-bg
+=========================================================*/
+@media (max-width: 660px) {
+  .vide h2, .rd-video_cnt h2 {
+    font-size: 50px;
+    line-height: 60px;
+    letter-spacing: 1.8px;
+  }
+}
+@media (max-width: 500px) {
+  .vide h2, .rd-video_cnt h2 {
+    font-size: 35px;
+    line-height: 42px;
+    letter-spacing: 1.8px;
+  }
+}

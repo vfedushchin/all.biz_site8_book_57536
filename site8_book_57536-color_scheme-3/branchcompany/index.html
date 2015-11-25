@@ -1,0 +1,79 @@
+{extends file="../index.html"}
+{block name=title}Contacts{/block}
+{block name=article}
+{strip}
+<div class="b-article vcard" itemscope itemtype="http://schema.org/Organization">
+<div class="b-box">
+	<h1 class="b-box-header fn org" itemprop="name">{$props->get('lng.contacts')} {$BRANCH.name|escape:'html'}
+	, {$BRANCH.country}, {if $BRANCH.city <> $BRANCH.region}{$BRANCH.region},&nbsp;{/if}{$BRANCH.city}, {$BRANCH.address|escape:'html'}
+	</h1>
+	<div class="b-box-transition">
+		<div class="b-contacts">
+			<div class="b-contacts-data">
+				<div class="b-contact-departments-row" style="border-bottom:0;">
+					<div class="b-contact-departments-row__head">
+						{$BRANCH.name|escape:'html'}
+					</div>
+						<div class="b-contact-departments-row__content">
+              {if $BRANCH.country}{$BRANCH.country},&nbsp;{/if}
+              {if $BRANCH.city}
+              {if $BRANCH.city <> $BRANCH.region}{$BRANCH.region},&nbsp;{/if}{$BRANCH.city}<br />
+              {/if}
+					{$props->get('lng.address')}:
+					    {if $BRANCH.zipcode}
+					    <span class="postal-code">{$BRANCH.zipcode|escape:'html'}</span>,
+					    {/if}{$BRANCH.address|escape:'html'},<br />
+					{$props->get('lng.phone_short')}:{$BRANCH.phone|escape:'html'}
+					    {if $BRANCH.web_site != ''},<br/>
+					        {$props->get('lng.site')}: <a class="b-link b-link_contacts"
+					            target="_blank"
+					            href="http://www.{$props->get('locale.country_code')}.{$MAIN_DOMAIN}/click.php?br_id={$BRANCH.id}">{$BRANCH.web_site}</a>
+					    {/if}
+					</div>
+				</div>
+			</div>
+			<div class="g_clear"></div>
+            <div class="g_clear"></div>
+        </div>
+	</div>
+</div>
+
+<div id="affiliateMap" style="width:730px; height:500px"></div>
+<script src="http://api-maps.yandex.ru/2.0/?load=package.standard&lang={$YANDEX_LNG}" type="text/javascript"></script>
+<script type="text/javascript">
+(function(){
+	var affiliateMap;
+	ymaps.ready(init);
+
+	function init() {
+		var search = "{$BRANCH.country} {$BRANCH.region} {$BRANCH.city} {$BRANCH.address}";
+		ymaps.geocode(search, { results: 1 }).then(function (res) {
+	        var firstGeoObject = res.geoObjects.get(0),
+	        coordinates;
+
+	        firstGeoObject = res.geoObjects.get(0);
+	        coordinates = firstGeoObject.geometry.getCoordinates();
+
+            affiliateMap = new ymaps.Map("affiliateMap", {
+                center: coordinates,
+                zoom: 15
+            });
+	        affiliateMap.container.fitToViewport();
+	        affiliateMap.controls
+		      .add('zoomControl', { left: 5, top: 5 })
+	          .add('mapTools', { left: 35, top: 5 });
+
+	        affiliateMap.balloon.open(coordinates, '{$BRANCH.name}', {
+	            closeButton: false
+	        });
+
+	    }, function (err) {
+	        alert(err.message);
+	    });
+	}
+})()
+</script>
+</div>
+
+{/strip}
+{/block}

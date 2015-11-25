@@ -1,0 +1,55 @@
+{strip}
+<!DOCTYPE HTML>
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head>
+<body>
+{if ($props->get('sys.maps.resource') == 'yandex')}
+{/strip}
+<script src="http://api-maps.yandex.ru/2.0/?load=package.full&lang={$smarty.const.LNG_CODE}-RU" type="text/javascript"></script>
+<script type="text/javascript">
+    ymaps.ready(init);
+
+    function init () {
+        var myMap = new ymaps.Map("map", {
+            center: [{$company.latitude},{$company.longitude}],
+    zoom: 14
+    }),
+
+    myPlacemark = new ymaps.Placemark([{$company.latitude},{$company.longitude}], {
+        // Properties
+        iconContent: '{$company.name|escape}',
+                balloonContentHeader: '{$company.name|escape}',
+                balloonContentBody: '',
+                balloonContentFooter: '{$props->get('lng.country_name')|escape}, {$company.city|escape}, {$company.address|escape}'
+    }, {
+        // Options
+        preset: 'twirl#blueStretchyIcon' // the icon stretches to fit the content
+    });
+
+    // Adding the placemark to the map
+    myMap.geoObjects.add(myPlacemark);
+
+    myMap.controls
+        // The zoom control button
+            .add('zoomControl')
+        // The list of map types
+            .add('typeSelector')
+        // The zoom control button (a compact version)
+        // Let's shift it to the right
+            .add('smallZoomControl', { right: 5, top: 75 })
+            .add('mapTools');
+    }
+</script>
+{strip}
+
+<div id="map" style="width:710px;height:370px"></div>
+
+{else}
+<script type="text/javascript">var width_map = 689;var height_map = 325</script>
+<script type="text/javascript" src="http://www.{$MAIN_DOMAIN}/java_script/googlemap.js"></script>
+<script>
+    GoogleMap("{$company.longitude}","{$company.latitude}","{$props->get('lng.country_name')|escape}, {$company.city|escape}, {$company.address|escape}","{$props->get('lng.country_name')|escape}, {$company.city|escape}","{$company.name|escape}","","", false, 14);
+</script>
+{/if}
+</body>
+{/strip}

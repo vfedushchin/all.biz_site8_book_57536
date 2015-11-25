@@ -1,0 +1,287 @@
+{extends file="../index.html"}
+{block name=article}{strip}
+
+</div>
+
+
+
+<div class="header_modules">
+
+
+    <section class="parallax well2 parallax-1"  id="parallax_0" data-url="{$template}/image/parallax-1.jpg" data-mobile="true" data-speed="100"> 
+      <div class="container">
+          <div class="row">
+              <div class="col-sm-12">
+                  <div class="row">
+                      <div class="col-sm-7">
+                          <div class="parallax-1_cnt">
+
+                              {if $BLOCK_NEWS}
+
+                                <a href="{$BLOCK_NEWS[0].href}" class="link"><h2>{substr($BLOCK_NEWS[0].title|escape:"htmlall",0,170)}...</h2></a>
+                                <p>{substr($BLOCK_NEWS[0].title|escape:"htmlall",0,170)}... : {substr($BLOCK_NEWS[0].body|escape:"htmlall",0,170)}...</p>
+
+                              {/if}
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </section>
+
+    <div class="box_html html-count">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="html-count-box">
+                        <div class="html-count-box_cnt">
+                            <strong>10000</strong>
+                            <h5>books in our store</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="html-count-box">
+                        <div class="html-count-box_cnt">
+                            <strong>2987</strong>
+                            <h5>popular authors</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="html-count-box">
+                        <div class="html-count-box_cnt">
+                            <strong>500</strong>
+                            <h5>grateful clients</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="container ">
+</div>
+
+
+<hr class="fw marTop1">
+<div class="content_bottom float-fix">
+    <div class="bg-featured">
+        <div class="container">
+            <div class="box featured">
+                <div class="box-heading">
+                    <h3>{$props->get('lng.products')|capitalize}</h3></div>
+                <div class="box-content ">
+                    <div class="row111">
+
+                        <div class="owl-carousel box-product">
+
+                    	{$n=1}
+											{foreach from=$GOODS_BLOCKS item=item  key=key}
+
+
+                                            <div class="product-thumb transition options  ">
+                                                <div class="image">
+                                                    <a href="{$item.href}" style="background-image: url('{$item.img_src}')" class="product-bg-container">
+                                                        <!-- <img alt="{$item.product_name}" src="{$item.img_src}"> -->
+                                                    </a>
+                                                </div>
+                                                <div class="caption">
+                                                    <div class="name"><a href="{$item.href}">{substr($item.product_name|escape:"htmlall",0,270)}... </a></div>
+                                                    <!-- <div class="description">
+                                                        {substr($item.description,0,570)}</div> -->
+                                                </div>
+                                                <div class="cart-button">
+                                                    <div class="price">
+                                                        {$item.price_native} {$item.currency}
+                                                    </div>
+                                                    {if $IS_SHOP_CART_ACTIVE && $item.price_native > 0}
+                                                    <a id="{$item.id}" class="product-btn-add button addToCart b-button_type_order" onClick="ga('send', 'event', 'CPA', 'order', 'order_button'); ga('send', 'event', 'cart', 'add_to_cart'); addtocart({$item.id}, '{$smarty.const.COUNTRY_CODE}', 1); return false;">
+                                                        <span>{$props->get('lng.add_to_card')}</span>
+                                                        <i class="fa fa-shopping-cart"></i> Купить
+                                                    </a>
+                                                    {else} {if $item.message_popup_link}
+                                                    <a class="product-btn-add button addToCart b-button_type_order js-message-form-popup" data-href="{$item.message_popup_link}?force_order=1">
+                                                        <span>{$props->get('lng.order')}</span>
+                                                        <i class="fa fa-shopping-cart"></i> Купить
+                                                    </a>
+                                                    {else}
+                                                    <a id="{$item.id}" href="javascript: //" class="product-btn-add button addToCart b-button_type_order js-button_type_order b-show_other" onClick="trackMe('{$typeOfPage}', 'order', 'Click');ga('send', 'event', 'CPA', 'order', 'order_button');">
+                                                        <span>{$props->get('lng.order')}</span>
+                                                        <i class="fa fa-shopping-cart"></i> Купить
+                                                    </a>
+                                                    {/if} {/if}
+                                                </div>
+                                            </div>
+
+
+
+                        {if ($n>=10)}
+													{break}
+												{/if}
+												{$n=$n+1}
+
+												{/foreach}
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+<hr class="fw">
+
+<div class="container" id="content">
+
+    <div id="fb-root"></div>
+    <div class="facebook info">
+        <div class="box-content">
+            <div class="fb-page" data-href="https://www.facebook.com/TemplateMonster" data-width="370" data-height="340" data-hide-cover="false" data-show-facepile="true" data-show-posts="true" </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    window.fbAsyncInit = function() {
+        var id = '734741803247761';
+        if (id == '') {
+            id = false;
+        }
+        FB.init({
+            appId: id,
+            xfbml: true,
+            version: 'v2.3'
+        });
+    };
+
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+
+    ;
+    (function($) {
+        var o = $('.fb-page');
+
+        $(window).load(function() {
+            o.css({
+                    'display': 'block'
+                })
+                .find('span').css({
+                    'width': '100%',
+                    'display': 'block',
+                    'text-align': 'inherit'
+                })
+                .find('iframe').css({
+                    'display': 'inline-block',
+                    'position': 'static'
+                });
+        });
+
+        $(window).on('load resize', function() {
+            if (o.parent().width() < o.find('iframe').width()) {
+                o.find('iframe').css({
+                        'transform': 'scale(' + (o.width() / o.find('iframe').width()) + ')',
+                        'transform-origin': '0% 0%'
+                    })
+                    .parent().css({
+                        'height': (o.find('iframe').height() * (o.width() / o.find('iframe').width())) + 'px'
+                    });
+            } else {
+                o
+                    .find('span').css({
+                        'height': o.find('iframe').height() + 'px'
+                    })
+                    .find('iframe').css({
+                        'transform': 'none'
+                    });
+            }
+        });
+    })(jQuery);
+    </script>
+
+
+
+    <div class="twitter soc_info">
+        <div class="box-heading">
+            <h3>Twitter feed</h3>
+        </div>
+        <div class="box-content">
+            <a class="twitter-timeline" width="370" height="340" data-theme="light" href="" data-tweet-limit="" data-widget-id="517285297164267522">
+            </a>
+        </div>
+    </div>
+    <script>
+    window.twttr = (function(d, s, id) {
+        var t, js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+        return window.twttr || (t = {
+            _e: [],
+            ready: function(f) {
+                t._e.push(f)
+            }
+        });
+    }(document, "script", "twitter-wjs"));
+    </script>
+
+
+
+    <div class="instagram">
+        <div class="box-heading">
+            <h3>Instagram</h3>
+        </div>
+        <div class="box-content">
+            <div id="instafeed"></div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    var userFeed = new Instafeed({
+        get: 'tagged',
+        tagName: 'booksstore',
+        clientId: ' 0e40054741ff45c3a2396276e0c70174',
+        limit: 6
+    });
+    userFeed.run();
+    </script>
+
+</div>
+
+
+
+
+
+{/strip}{/block}
+
+{block name="custom_js"}
+	<script src="{$STATIC_HOST}/js/includes/showcase/showcase.js"></script>
+{/block}

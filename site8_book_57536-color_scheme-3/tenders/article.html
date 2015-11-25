@@ -1,0 +1,89 @@
+{extends file="../index.html"}
+{block name=title}Default Title{/block}
+{block name=article}
+<div class="b-article">
+	
+	<div class="b-box">
+		<div class="b-box-transition b-price-top">
+			<h1 class="b-tender-about-head">{$SINGLE.name|escape}</h1>
+			
+			<div class="b-tender-about-group">{$props->get('lng.group')}: <a href="{$SINGLE.href_group}" class="b-link" title="">{$SINGLE.group_name}</a></div>
+			
+		
+			<div class="b-tender-about-box">
+				{if $SINGLE.price != '0.00'}
+					<div class="b-tender-about-box__price">{$SINGLE.price} {$props->get('finance.native_currency_txt_code')}{if $SINGLE.un != ''}/{$SINGLE.un}{/if}</div>
+				{else}
+					<div class="b-tender-about-box__price">&nbsp;</div>
+				{/if}
+				<div class="b-tender-about-box__send">
+                    {if $SINGLE.message_popup_link}
+                        <span class="b-button b-button_type_tender-write js-message-form-popup" data-href="{$SINGLE.message_popup_link}">
+                            {$props->get('lng.contact_supplier', 'Связаться с поставщиком')}
+                        </span>
+                    {else}
+                        <a href="javascript: //" id="{$SINGLE.rq_id}" class="b-button js-button_type_order b-button_type_tender-write" title="">{$props->get('lng.write_letter')}</a>
+                    {/if}
+				</div>
+				<div class="b-tender-about-box__etc"><a href="{$HREF_CONTACTS}" class="b-link" title="">{$props->get('lng.contacts')}</a><br /><a href="{$HREF_ABOUT}" class="b-link" title="">{$props->get('lng.about_enterprise')}</a></div>
+			</div>
+		</div>
+		<div class="b-box-spacer">&nbsp;</div>
+		<div class="b-box-transition">
+			<h2 class="b-header-content g-margintop__null">{$props->get('lng.description')}</h2>
+			
+			<p>{$SINGLE.description}</p>
+			<p>{$props->get('added')}: {$SINGLE.order_date}, {$props->get('updated')}: {$SINGLE.update_date}</p>
+			
+			
+		</div>
+	</div>
+	
+	{if $SIMILAR}
+		<div class="b-box">
+			<h2 class="b-box-header">{$props->get('lng.similar')}</h2>
+			<div class="b-box-transition">
+		{foreach from=$SIMILAR item=item key=key}
+				<div class="b-tender-similar-line b-product-row">
+                    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                        <tr>
+                            <td class="b-tender-similar-line__head"><a href="{$item.href}" class="b-link" title='{$item.name|escape}'>{$item.name|escape}</a></td>
+                            {if $item.price != '0.00'}
+                            <td class="b-tender-similar-line__price">{$item.price} {$props->get('finance.native_currency_txt_code')}{if $item.un}/{$item.un}{/if}</td>
+                            {/if}
+                            <td class="b-tender-similar-line__order"
+                                {if $item.message_popup_link}
+                                    <span class="b-button js-message-form-popup" data-href="{$item.message_popup_link}">
+                                        {$props->get('lng.contact_supplier', 'Связаться с поставщиком')}
+                                    </span>
+                                {else}
+                                    <a href="javascript: //" id="{$item.id}" class="b-button js-button_type_order" title="" onClick="ga('send', 'event', 'CPA', 'order', 'order_button');">{$props->get('lng.write_letter')}</a>
+                                {/if}
+                            </td>
+                        </tr>
+                    </table>
+				</div>
+		{/foreach}
+			</div>
+		</div>
+	{/if}
+	
+</div>
+
+<script>
+	{if $SINGLE}
+		setting[{$SINGLE.rq_id}] = { "prod_name": "{$SINGLE.name|escape}", "id": "{$SINGLE.rq_id}", "c": "{$SINGLE.code}", "whom" : "{$company.name|escape}", is_paid: "{$company.isPaid|intval}"};
+	{/if}
+	
+	{if $SIMILAR}
+		{foreach from=$SIMILAR item=item key=key} 
+			{if $SINGLE.rq_id == $item.id}
+			
+			{else}
+				setting[{$item.id}] = { "prod_name": "{$item.name|escape}", "id": "{$item.id}", "c": "{$item.code}", "whom" : "{$company.name|escape}", is_paid: "{$company.isPaid|intval}"};
+			{/if}
+		{/foreach}	
+	{/if}
+</script>
+
+{/block}

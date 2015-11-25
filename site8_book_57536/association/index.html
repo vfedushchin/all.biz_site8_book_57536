@@ -1,0 +1,19 @@
+{extends file="../index.html"}
+{block name=article}
+<div class="b-article">
+	<div class="b-box">
+		<h1 class="b-box-header">{*$header*}{$NAME_ASSOCIATION}</h1>
+		<div class="b-box-transition">
+			<div class="b-association-title">{$props->get('lng.association_members_list')}</div>
+			<div class="b-association-list">
+				{if $LIST}
+					{foreach from=$LIST item=item key=key}
+						<a class="b-link b-association-list__item" href="{$item.href}">{$item.name}</a>
+					{/foreach}
+				{/if}
+			</div>
+			{$PAGE_NAV}
+		</div>
+	</div>
+</div>
+{/block}

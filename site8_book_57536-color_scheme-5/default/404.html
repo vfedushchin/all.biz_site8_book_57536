@@ -1,0 +1,19 @@
+{extends file="../index.html"}
+{block name=title}Default Title{/block}
+{block name=article}
+{block name="content"}{strip}
+<article class="b-content">
+  <div class="b-404">
+    <div class="b-404__img">
+      404
+    </div>
+    <div class="b-404__text">
+      <h5 class="b-404__title">{$404_ERROR_TITLE}</h5>
+      <p>{$404_ERROR_RECOMMEND1}</p>
+      <p>{$404_ERROR_RECOMMEND2}</p>
+      <p><a href="{$GO_TO_MAIN_PAGE_LINK}">{$GO_TO_MAIN_PAGE}</a></p>
+    </div>
+  </div>
+</article>
+{/strip}{/block}
+{/block}

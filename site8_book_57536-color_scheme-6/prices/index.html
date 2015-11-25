@@ -1,0 +1,66 @@
+{extends file="../index.html"}
+{block name=title}Default Title{/block}
+{block name=article}
+    <section class="b-content-block">
+        <section class="b-product--card">
+            <h1 class="b-product--card__title">{$allbiz_seotext_h1_tag}</h1>
+        </section>
+        <ul class="b-prices">
+            {if $LIST}
+                {foreach from=$LIST item=item key=key}
+                    <li class="b-prices-item">
+                        <a href="{$item.href}" title='{$item.name|escape:"html"}'>{$item.name|escape:"html"}</a>
+                        <div class="b-prices__date">{$props->get('lng.date')}: {$item.date}</div>
+                    </li>
+                {/foreach}
+            {/if}
+        </ul>
+    </section>
+    <!--
+    <div class="b-article">
+        <div class="b-box">
+            <div class="b-box-header">
+                <ul class="b-header-tab-menu g-fr">
+                    <li class="b-header-tab-menu__item b-header-tab-menu__item_type_first {if $VIEW_TYPE == 'goods'}b-header-tab-menu__item_type_current{/if}"><a href="{$HREF_PRICE_GOODS}" class="b-header-tab-menu__link{if $VIEW_TYPE == 'goods'} b-header-tab-menu__link_state_selected{/if}" title="">{$props->get('lng.product_prices')}</a></li>
+                    <li class="b-header-tab-menu__item b-header-tab-menu__item_type_last {if $VIEW_TYPE == 'services'}b-header-tab-menu__item_type_current{/if}"><a href="{$HREF_PRICE_SERVICES}" class="b-header-tab-menu__link{if $VIEW_TYPE == 'services'} b-header-tab-menu__link_state_selected{/if}" title="">{$props->get('service_price')}</a></li>
+                </ul>
+                <h1 id="allbiz_seotext_h1_tag">{if $Q}{$props->get('lng.results_of_search')}: {$Q}{else}{$allbiz_seotext_h1_tag}{/if}</h1>
+                <div class="g-clear"></div>
+            </div>
+
+            <div class="b-box-transition">
+                {if $Q}
+                    {if count($LIST) > 0}
+                        <div class="b-search-founded">{$props->get('lng.found_positions')}: {count($LIST)}</div>
+                    {else}
+                        <div class="b-search-founded">
+                            <strong>{$props->get('lng.information_by_query_is_absent')}</strong>
+                            <div class="b-search-recommendations">
+                                <strong>{$props->get('lng.recommendations')}</strong><br>
+                                - {$props->get('lng.check_up_correctness_writing_keywords')}<br>
+                                - {$props->get('lng.try_to_use_others_probably_more_popular_keywords')}<br>
+                                {if $HREF_GLOBAL_SEARCH}
+                                - <a href="{$HREF_GLOBAL_SEARCH}">{$props->get('lng.global_search')}</a>
+                                {/if}
+                            </div>
+                        </div>
+                    {/if}
+                {/if}
+
+                <div class="b-product-galery">
+                    {if $LIST}
+                        {foreach from=$LIST item=item key=key}
+                            <div class="b-product-row">
+                                <div class="b-price-row__head">
+                                    <a href="{$item.href}" class="b-link b-price-row__title" title='{$item.name|escape:"html"}'>{$item.name|escape:"html"}</a>
+                                    <div class="b-price-row__date">{$props->get('lng.date')}: {$item.date}</div>
+                                </div>
+                            </div>
+                        {/foreach}
+                    {/if}
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
+{/block}

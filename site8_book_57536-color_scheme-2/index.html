@@ -1,0 +1,568 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+
+<!-- путь к шаблону -->
+{$template="/templates/site8_book_57536-color_scheme-2"}
+
+    <title>{$title}</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="keywords" http-equiv="keywords" content="{$keywords|escape}">
+    <meta name="description" http-equiv="description" content="{$description|escape}">
+    <meta name="robots" content="{if $ROBOTS_NOINDEX}noindex,follow{else}{$robots|escape}{/if}">
+    <meta http-equiv="Content-Language" content="{$props->get('locale.language')}">
+    <meta name="geo.region" content="{$props->get('locale.country_code')|upper}" />
+    <meta name="geo.placename" content="{$company.city}" />
+    {if isset($meta_all_langs)}
+    {foreach from=$meta_all_langs key=k item=v}
+    <link rel="alternate" hreflang="{$v.hreflang}" href="http://{$v.href}" />
+    {/foreach}
+    {/if}
+
+    {if $company.latitude && $company.longitude}
+    <meta name="geo.position" content="{$company.latitude};{$company.longitude}" />
+    <meta name="ICBM" content="{$company.latitude},{$company.longitude}" />
+    {/if}
+
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,target-densitydpi=device-dpi" />
+    <link rel="icon" type="image/x-icon" href="{$template}/image/favicon.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="{$template}/image/favicon.png" />
+
+    {*if (!empty($ART.mainHrefToCatalog)) and {$props->get('locale.language')} == 'pl'*}
+    {if isset($ABOUT_CANONICAL)}
+    <link rel="canonical" href="{$URL_LNG_ADD}/">
+    {/if}
+    {if (!empty($ART.mainHrefToCatalog)) and $props->get('locale.country_code') == 'PL'}
+    <link rel="canonical" href="{$ART.mainHrefToCatalog}">
+    {/if}
+    <!-- <link rel="shortcut icon" href="{$styles.ss_favicon}"> -->
+    {if $CANONICAL_URL}
+    <link rel="canonical" href="{$CANONICAL_URL}" />
+    {/if}
+    {if (!$company.isPaid)}
+    <script language="javascript" type="text/javascript">
+        var page_market = '';
+        var key_code = '';
+        var lng_code = '/lng-{$props->get('locale.language')}';
+    </script>
+    <script type="text/javascript" src="http://www.{$MAIN_DOMAIN}/java_script/adriver.core.2.js?t=20111111"></script>
+    {/if}
+    <script language="javascript" type="text/javascript">
+        {literal}
+        var yaParams = {section: "minisite"};
+        {/literal}
+    </script>
+
+
+
+
+  <!-- <link rel="stylesheet" type="text/css" href="{$STATIC_HOST}/css/global/plugins/jquery.owlCarousel.css">
+    <link rel="stylesheet" type="text/css" href="{$STATIC_HOST}/css/global/blocks/popup/popup.css" />
+    <link rel="stylesheet" type="text/css" href="{$STATIC_HOST}/bootstrap/bootstrap-3_1_1.css" />
+
+ 
+    <link href="{$STATIC_HOST}/minisite/themes/orange/css/compiled.css" rel="stylesheet" type="text/css">
+    <link href="{$STATIC_HOST}/__tmp/domain_allbiz/css/old/blocks/popup/popup.css" rel="stylesheet" type="text/css">-->
+    <link rel="stylesheet" type="text/css" href="{$template}/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="{$template}/css/camera.css" />
+    <link rel="stylesheet" type="text/css" href="{$template}/css/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="{$template}/css/material-design.css" />
+
+    <link rel="stylesheet" type="text/css" href="{$template}/css/owl-carousel.css" />
+    
+    <link rel="stylesheet" type="text/css" href="{$template}/css/jquery.bxslider.css" />
+    <link rel="stylesheet" type="text/css" href="{$template}/css/stylesheet.css" />  
+    <link rel="stylesheet" type="text/css" href="{$template}/css/additional.css" />
+    <link rel="stylesheet" type="text/css" href="{$template}/css/tm_video_bg.css" />
+    
+  
+
+
+
+    <script type="text/javascript" src="{$template}/js/jquery/jquery.js"></script>
+    <script type="text/javascript" src="{$template}/js/jquery/jquery-migrate-1.2.1.js"></script>
+    <script type="text/javascript" src="{$template}/js/device.min.js"></script>
+    <script type="text/javascript" src="{$template}/js/jquery/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="{$template}/js/jquery.equalheights.js"></script>
+    <script type="text/javascript" src="{$template}/js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="{$template}/js/jquery.rd-youtube-bg.js"></script>
+    
+    <script type="text/javascript" src="{$template}/js/superfish.js"></script>
+    <script src="{$template}/js/15-jquery.total-storage.min.js"></script>
+    <script src="{$template}/js/TweenMax.min.js"></script>
+     <script type="text/javascript" src="{$template}/js/jquery.ui.totop.js"></script>
+    <script type="text/javascript" src="{$template}/js/jquery.mobilemenu.js"></script>
+     <script type="text/javascript"  src="{$template}/js/bxslider/jquery.bxslider.js"></script>  
+     <script type="text/JavaScript" src="{$template}/js/elevate/jquery.elevatezoom.js"></script>
+     <script type="text/JavaScript" src="//maps.google.com/maps/api/js?sensor=false"></script>
+     <script type="text/javascript" src="{$template}/js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+    <link rel="stylesheet" type="text/css" href="{$template}/js/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+    <script src="{$template}/js/jquery.rd-google-map.js"></script>
+    <script src="{$template}/js/jquery.matchHeight.js"></script> 
+
+    <script type="text/javascript" src="{$template}/js/jquery.rd-parallax.js"></script>
+    <script type="text/javascript" src="{$template}/js/instagram/instafeed.min.js"></script>
+    <!--[if lte IE 8]>
+    <script type="text/javascript" src="/{$STATIC_HOST}/js/global/html5.js"></script>
+    <![endif]-->
+    {* sorry Ura =) perenesli v less ;-)  *}
+
+    {StaticsJs::get_variable($MAIN_MODULE, $CONTROLLER, $ACTION)}
+
+</head>
+
+<body>
+
+
+
+<script type="text/javascript">
+    {if $props->get('locale.is_native_language') == 1}
+        var langcode = '';
+        {else}
+        var langcode = '/ru';
+        {/if}
+            var text_add = 'запрос по ';
+            var text_add_price = 'Прошу сообщить актуальную цену на';
+            var text_head_form = '{$props->get("send_msg")|escape}';
+            var text_add_more_img = "Заинтересовало Ваше предложение '[NAME_PRODUCT]'. Прошу, при возможности, предоставить больше фотографий.";
+            var setting = { } ; 
+            var setting_f = { } ;
+            setting_f[{$company.tld}] = { "id": "0", "c": "{$companySecureCode}", "whom" : "{$company.name|escape}"};
+</script>
+
+
+<div id="page">
+
+{* -------------------- Start header --------------------*}
+
+
+
+
+
+
+
+
+
+
+<header>
+    <div class="header-top-bg">
+        <div class="container">
+            <nav id="top-links" class="nav toggle-wrap">
+                <ul class="toggle_cont">
+                    <li class="toggle-wrap">
+                        {if $WELCOME} {$props->get('welcome')}, <a class="b-link b-link" href="{$HREF_TO_PROFILE}">{$WELCOME}</a>.
+                        <a href="{$HREF_LOGOUT}" class="b-link b-link" title=""><i class="fa fa-unlock-alt"></i> {$props->get('logout')}</a> {else}
+                        <a href="{$HREF_LOGIN}"><i class="fa fa-unlock-alt"></i>  {$props->get('lng.login')}</a> {/if}
+                    </li>
+                    <li>
+                        <a href="/">
+                            <i class="fa fa-home"></i>
+                            <span>Главная</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            {if $LANGUAGES_FOR_DISPLAY}
+            <div class="box-language">
+                <div id="language">
+                    <div class="b-overheader-dropdown">
+                        <span class="hidden-xs hidden-sm hidden-md">Язык: </span>
+                        <a class="b-overheader-dropdown__btn" id="hLng" data-toggle="dropdown" href="#">{$LANGUAGE_FOR_DISPLAY}</a>
+                        <ul role="menu" aria-labelledby="hLng">
+                            {foreach from=$LANGUAGES_FOR_DISPLAY item=language name=lng}
+                            <li>
+                                <a class="b-overheader-dropdown__link" href="{$language.href}">{$language.name}</a>
+                            </li>
+                            {/foreach}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {/if}
+            <div class="box-cart">
+                <div id="cart" class="cart toggle-wrap">
+                    <a href="http://www.{$smarty.const.MAIN_DOMAIN}/cart" class="button toggle">
+                        <i class="fa fa-shopping-cart"></i>
+                        <strong>Корзина</strong>
+                    </a>
+                </div>
+            </div>
+            <form id="search" class="search" action="{if $ACTION_FOR_SEARCH}{$ACTION_FOR_SEARCH}{/if}">
+                <input class="b-header-search__input" type="text" value="" name="q" placeholder="{$props->get('lng.search')}">
+                <button class="button-search" type="submit" value="">
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        <div class="header-wrap">
+            <ul class="social-list list-unstyled">
+                <li>
+                    <a href='//www.facebook.com'>
+                        <i class="material-design-facebook56"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href='//plus.google.com'>
+                        <i class="material-design-google120"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href='//twitter.com'>
+                        <i class="material-design-twitter47"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href='//www.youtube.com'>
+                        <i class="material-design-youtube35"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="header-wrap">
+            <div id="logo" class="logo">
+                <a href="/">
+                    {if !$text_logo}
+                    <img src="{$template}/image/logo.png" title="Игрушки - интернет магазин" alt="Игрушки - интернет магазин" />
+                    {else}
+                        <div class="text_logo">
+                            {$text_logo}  
+                        </div>
+                    {/if}
+                </a>
+            </div>
+        </div>
+        <div class="header-wrap">
+            <address class="box-address fa fa-phone">
+                <a href="callto:{$company.phone}">
+                  {$company.phone}
+                </a>
+            </address>
+        </div>
+    </div>
+    <div id="stuck" class="stuck-menu">
+        <div id="tm_menu" class="nav__primary">
+            <div class="container" id="menu">
+                {** menu **}
+                <ul class="sf-menu list-inline menu">
+                    {foreach from=$MENU item=item key=key} {if $item.menu && $item.menu_block != 'info'} {if $key == $CURRENT_MENU_ID} {$page_id = $item.page_id} s {/if} {if $key == 'isGoods' || $key == 'isService'} {** меню для товаров и услуг (с деревом) **}
+                    <li class="sf-menu-item">
+                        <a href="{$item.href}" class="b-left-menu__link sf-with-ul" title=""><span class="over"></span><span class="tx">{$item.name}</span></a> {if $item.byGroups} {if ($key == 'isGoods' and isset($CUSTOM_GOODS)) or ($key == 'isService' and isset($CUSTOM_SERVICES)) } {* === Кастомное меню START === *} {if $key == 'isGoods'} {assign var="groups_part_url" value='/my-goods/'} {else} {assign var="groups_part_url" value='/my-services/'} {/if}
+                        <div class="sf-mega">
+                            <ul class="b-left-submenu sf-mega-section" id="sul_{$key}">
+                                {foreach from=$item.byGroups item=value key=prod_id}
+                                <li class="b-left-submenu-item">
+                                    <a href="{$groups_part_url}{$value.main.seo_url}" class="b-left-submenu__link">
+                                                        {$value.main.group_name}&nbsp;
+                                                        <i class="b-left-submenu__qty">{$value.main.count_child}</i>
+                                                    </a>
+                                </li>
+                                {if isset($value.child)}
+                                <ul class="">
+                                    {foreach from=$value.child item=child_value key=child_prod_id}
+                                    <li class="">
+                                        <a href="{$groups_part_url}{$child_value.seo_url}" class="">
+                                                                    {$child_value.group_name}&nbsp;
+                                                                    <i class="b-left-submenu__qty">{$child_value.count}</i>
+                                                                </a>
+                                    </li>
+                                    {/foreach}
+                                </ul>
+                                {/if} {/foreach}
+                            </ul>
+                        </div>
+                        {* === Кастомное меню END === *} {else} {* СТандартное меню START *}
+                        <div class="sf-mega">
+                            {if (COUNT($item.byGroups)>$LIMIT_MENU_GROUPS)}
+                            <span class="b-left-submenu__link c_toggle_link js-toggle" data-toggleclass="c_hidden" data-placeholder="{$props->get('lng.close_list')}" data-target="menu_hidden_{$key}">{$props->get('lng.open_list')}</span> {/if}
+                            <ul class="b-left-submenu sf-mega-section" id="sul_{$key}">
+                                {if $CURRENT_GROUP_ID[$key]} {** выбраная группа товара\услуг вверху **}
+                                <li class="b-left-submenu-item">
+                                    <a href="{$item.byGroups[$CURRENT_GROUP_ID[$key]].href}" class="b-left-submenu__link" title="">
+                                                        {$item.byGroups[$CURRENT_GROUP_ID[$key]].group_name}&nbsp;<i class="b-left-submenu__qty">{** кол. товаров в группе **} {$item.byGroups[$CURRENT_GROUP_ID[$key]].count}</i>
+                                                    </a>
+                                </li>
+                                {/if} {foreach from=$item.byGroups item=value key=prod_id} {** далее все группы товара\услуг БЕЗ выбраной **} {if $CURRENT_GROUP_ID[$key]
+                                <> $prod_id}
+                                    <li class="b-left-submenu-item {if $value@iteration>$LIMIT_MENU_GROUPS}c_hidden" data-toggle="menu_hidden_{$key}" {else} "{/if}>
+                                                        <a href="{$value.href} " class="b-left-submenu__link " title=" ">
+                                                            {$value.group_name}&nbsp;
+                                                            <i class="b-left-submenu__qty ">{$value.count}</i> {** кол. товаров в группе **}
+                                                        </a>
+                                                    </li>
+                                                {else} 
+                                                    {if $value@iteration>$LIMIT_MENU_GROUPS}
+                                                        {* для переключалки развернуть/свернуть надо увеличить лимит, иначе будет пропадать последний пункт в меню перед кнопочкой "развернуть ", плохо что здесь логика, но пока ничего лучше не придумал *}
+                                                        {assign var=LIMIT_MENU_GROUPS value=$LIMIT_MENU_GROUPS+1}
+                                                    {/if}
+                                                {/if}
+                                            {/foreach}
+                                           
+                                        </ul>
+                                        </div>  
+                                    {/if}
+                                    {* СТандартное меню END *}
+                                {/if}
+                           </li> 
+                        {else} 
+                            {** обычные пункты меня, аля новости, прайсты итд **}
+                            <li class=" ">
+                                <a class="b-left-menu__link " href="{$item.href} " ><span class="over "></span><span class="tx ">{$item.name}</span></a>
+                                {if isset($item.child)}
+                                <div class="sf-mega " > 
+                                                    <ul class="b-left-submenu sf-mega-section ">
+                                                            {foreach from=$item.child item=value key=prod_id}
+                                                <li class=" {if isset($value.child)} {/if} ">
+                                                    <a href="{$value.href} " class=" ">
+                                                        {$value.name}&nbsp;
+                                                        
+                                                    </a> 
+                                                     {if isset($value.child)}
+                                                    <ul class=" ">
+                                                        {foreach from=$value.child item=child_value key=child_prod_id}
+                                                            <li  class=" "> 
+                                                                <a href="{$child_value.href} " class=" ">
+                                                                    {$child_value.name}&nbsp;&nbsp;
+                                                                    
+                                                                </a>
+                                                            </li>
+                                                        {/foreach}
+                                                            </ul>
+                                                        {/if}
+                                                </li>  
+
+                                               
+                                                        {/foreach} 
+                                                    </ul>  
+                                     </div>
+                                 {/if}
+
+                           </li>
+                        {/if}
+                          
+                    {/if}
+                {/foreach}
+              </ul>
+
+
+            <div class="clear "></div>
+        </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+
+
+{* -------------------- end header ----------------------*}
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="container marTop2">
+        <article class="b-content">
+             {block name="article"}{/block}
+        </article>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+{* -------------------- start footer --------------------*}
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6 col-md-3 center">
+                <div class="footer_box">
+                        <a href="/" class="footer-logo">
+                            {if !$text_logo}
+                            <img src="{$template}/image/logo.png" title="Игрушки - интернет магазин" alt="Игрушки - интернет магазин" />
+                            {else}
+                                <div class="text_logo">
+                                    {$text_logo}  
+                                </div>
+                            {/if}
+                        </a>
+
+
+                    <address class="box-address fa fa-phone">
+                        <a href="callto:{$company.phone}">
+                          {$company.phone}
+                        </a>
+                    </address>
+
+                </div>
+            </div>
+            <div class="col-xs-6 col-md-3 col-lg-3">
+                <div class="footer_box">
+                    <h5>Наши контакты</h5>
+
+                    <address>
+                        <p class="b-contacts-data-content adr" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                            {if $company.is_custom_data}
+                            <span itemprop="addressLocality"><span class="country-name">{$company.custom_data.country}</span>, {if $company.custom_data.city
+                            <> $company.custom_data.region}<span class="region">{$company.custom_data.region}</span>,&nbsp;{/if}<span class="locality">{$company.custom_data.city}</span></span>,
+                                <span class="street-address" itemprop="streetAddress">{$company.custom_data.address}</span> {else}
+                                <span itemprop="addressLocality"><span class="country-name">{$props->get('lng.country_name')}</span>, {if $company.city
+                                <> $company.region}<span class="region">{$company.region}</span>,&nbsp;{/if}<span class="locality">{$company.city}</span></span>, {if $company.zipcode}<span class="postal-code" itemprop="postalCode">{$company.zipcode}</span>, {/if}
+                                    <span class="street-address" itemprop="streetAddress">{$company.address}</span> {/if}
+                            </p>
+                    </address>
+                    
+                    <ul class="social-list list-unstyled">
+                        <li>
+                            <a href="//www.facebook.com">
+                                <i class="material-design-facebook56"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="//plus.google.com">
+                                <i class="material-design-google120"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="//twitter.com">
+                                <i class="material-design-twitter47"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="//www.youtube.com">
+                                <i class="material-design-youtube35"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-6 col-md-6 col-lg-6 ">
+                <div class="footer_box">
+                    <h5>Меню</h5> 
+                        {**MENU FOOTER**}
+                        <nav class="b-footer-menu ">
+                            <ul>
+                                {foreach from=$MENU item=item key=key} {if $item.menu && $item.menu_block == 'info'} {if $item.menu} {if $key == $CURRENT_MENU_ID} {$page_id = $item.page_id} {/if} {if $key == 'isGoods' || $key == 'isService'} {** меню для товаров и услуг (с деревом) **}
+                                <a href="{$item.href}" class="b-footer-menu__link" title="">{$item.name}</a> {if $item.byGroups} {if ($key == 'isGoods' and isset($CUSTOM_GOODS)) or ($key == 'isService' and isset($CUSTOM_SERVICES)) } {* === Кастомное меню START === *} {if $key == 'isGoods'} {assign var="groups_part_url" value='/my-goods/'} {else} {assign var="groups_part_url" value='/my-services/'} {/if}
+                                <div class="sf-mega">
+                                    <ul class="b-left-submenu sf-mega-section" id="sul_{$key}">
+                                        {foreach from=$item.byGroups item=value key=prod_id}
+                                        <a href="{$groups_part_url}{$value.main.seo_url}" class="b-footer-menu__link">
+                                                                                {$value.main.group_name}&nbsp;
+                                                                               
+                                                                            </a>
+                                        </li>
+                                        {if isset($value.child)}
+                                        <ul class="b-left-submenu">
+                                            {foreach from=$value.child item=child_value key=child_prod_id}
+                                            <li class="b-left-submenu-item">
+                                                <i class="fa fa-angle-right "></i> <a href="{$groups_part_url}{$child_value.seo_url}" class="b-left-submenu__link">
+                                                                                            {$child_value.group_name}&nbsp;
+                                                                                            <i class="b-left-submenu__qty">{$child_value.count}</i>
+                                                                                        </a>
+                                            </li>
+                                            {/foreach}
+                                        </ul>
+                                        {/if} {/foreach}
+                                    </ul>
+                                </div>
+                                {* === Кастомное меню END === *} {else} {* СТандартное меню START *} {if $CURRENT_GROUP_ID[$key]} {** выбраная группа товара\услуг вверху **}
+                                <a href="{$item.byGroups[$CURRENT_GROUP_ID[$key]].href}" class="b-footer-menu__link" title="">
+                                                                                {$item.byGroups[$CURRENT_GROUP_ID[$key]].group_name}&nbsp;<i class="b-left-submenu__qty">{** кол. товаров в группе **} {$item.byGroups[$CURRENT_GROUP_ID[$key]].count}</i>
+                                                                            </a> {/if} {foreach from=$item.byGroups item=value key=prod_id} {** далее все группы товара\услуг БЕЗ выбраной **} {if $CURRENT_GROUP_ID[$key]
+                                <> $prod_id}
+                                    <li class="b-left-submenu-item {if $value@iteration>$LIMIT_MENU_GROUPS}c_hidden" data-toggle="menu_hidden_{$key}" {else} "{/if}>
+                                                                               <i class="fa fa-angle-right "></i> <a href="{$value.href} " class="b-left-submenu__link " title=" ">
+                                                                                    {$value.group_name}&nbsp;
+                                                                                    <i class="b-left-submenu__qty ">{$value.count}</i> {** кол. товаров в группе **}
+                                                                                </a>
+                                                                            </li>
+                                                                        {else} 
+                                                                            {if $value@iteration>$LIMIT_MENU_GROUPS}
+                                                                                {* для переключалки развернуть/свернуть надо увеличить лимит, иначе будет пропадать последний пункт в меню перед кнопочкой "развернуть ", плохо что здесь логика, но пока ничего лучше не придумал *}
+                                                                                {assign var=LIMIT_MENU_GROUPS value=$LIMIT_MENU_GROUPS+1}
+                                                                            {/if}
+                                                                        {/if}
+                                                                    {/foreach}
+                                                                    {if (COUNT($item.byGroups)>$LIMIT_MENU_GROUPS)}
+                                                                        <span class="b-left-submenu__link c_toggle_link js-toggle " data-toggleclass="c_hidden " data-placeholder="{$props->get('lng.close_list')}" data-target="menu_hidden_{$key}">{$props->get('lng.open_list')}</span>
+                                        {/if}
+                            </ul>
+                    </div>
+                    {/if} {* СТандартное меню END *} {/if}
+                    </li>
+                    {else} {** обычные пункты меня, аля новости, прайсты итд **}
+                    <li class="b-footer-menu__link">
+                        <a href="{$item.href}">{$item.name}</a>
+                    </li>
+                    {/if} {/if} {/if} {/foreach}
+                    </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="copyright">
+    <div class="container">
+         {if $company.phone && $company.phone|strlen > 5}
+        <span class="b-footer-content__phones">{$company.phone}</span> {/if}
+        <div class="row">
+            <div class="col-lg-4 footer-company-name">
+                &copy; {$company.name}
+            </div>
+            <div class="col-lg-5 marTop1">
+                <div class="b-footer-allbiz">
+                    разработка и поддержка сайта
+                    <i class="b-icon-allbiz"></i>
+                </div>
+            </div>
+            <div class="col-lg-3 abuse-link">
+                <a class="" href="{$HREF_FEEDBACK}">{$props->get('lng.report_abuse')}</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</footer>
+
+
+
+
+
+
+
+</div>
+
+{* -------------------- end footer --------------------*}
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="{$template}/js/script.js"></script>
+<script type="text/javascript" src="{$template}/js/sl/camera.js"></script> 
+</body>
+</html>

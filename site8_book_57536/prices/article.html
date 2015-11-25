@@ -1,0 +1,111 @@
+{extends file="../index.html"}
+{block name=title}Default Title{/block}
+{block name=article}
+    {if $PRICE}
+        <section class="b-content-block">
+            <div class="b-content-title">
+                <h2 class="b-content-title__text">{$allbiz_seotext_h1_tag}</h2>
+            </div>
+            <div class="clearfix">
+                <div class="col-lg-4">
+                    <a class="btn btn-connect" href="{$HREF_CONTACTS}">{$props->get('connect')}</a>
+                </div>
+                <div class="b-product--card-photo__price col-lg-5 text-right">
+                    <div class="price" {if $PRICE.price_native != 0.00} itemprop="offers" itemscope itemtype="http://schema.org/Offer"{/if}>
+                        <p>{$PRICE.description|escape:"htmlall"}</p>
+                        <p>{$props->get('added')}: {$PRICE.order_date}, {$props->get('updated')}: {$PRICE.date}</p>
+
+                        {if $PRICE.price_native != '0.00'}
+                            <div class="b-price-row__info">{$PRICE.price_native} {$props->get('finance.native_currency_txt_code')} {$PRICE.un|escape:"htmlall"}</div>
+                        {else}
+                            <div class="b-price-row__info">{$PRICE.price_foreign} {$scurrency} {$PRICE.un|escape:"htmlall"}</div>
+                        {/if}
+                    </div>
+                </div>
+                <div class="col-lg-3 text-right">
+                    <div class="b-price-row__order">
+                        {if $PRICE.message_popup_link}
+                            <span class="btn btn-buy js-message-form-popup" data-href="{$PRICE.message_popup_link}">
+                                {if $message_mode == 4}
+                                    {$props->get('lng.clarify.details', 'Уточнить детали')}
+                                {elseif $message_mode == 3}
+                                    {$props->get('lng.write.to.company', 'Написать компании')}
+                                {else}
+                                    {$props->get('lng.order')}
+                                {/if}
+                            </span>
+                        {else}
+                        <a href="javascript: //"
+                                   class="js__order_BTN btn btn-buy js-button_type_order"
+                           id="{$PRICE.price_id}" is-price="{if $VIEW_TYPE == 'pg'}3{else}4{/if}"
+                           group-id="{$group_id}" title=""
+                           onClick="ga('send', 'event', 'CPA', 'order', 'order_button');">{$props->get('lng.order')}</a>
+                        {/if}
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="col-lg-8">
+                        {if $PRICE.group_name}
+                            {$props->get('lng.group')}: <a href="{$PRICE.href_group}" class="b-link" title="">{$PRICE.group_name|escape}</a>
+                        {/if}
+                    </div>
+                    <div class="col-lg-4 text-right">
+                        <em>
+                            {if $PRICE.message_popup_link}
+                                {if $message_mode == 2}
+                                    <span class="b-link b-link_exact_price js-message-form-popup" data-href="{$PRICE.message_popup_link}?force_exact=1">
+                                        {$props->get("lng.exact_price")}
+                                    </span>
+                                {/if}
+                            {else}
+                                <a class="js__pricing_BTN b-link b-link_exact_price exact_price" title="" href="javascript: //" id="{$ART.id}_ex" onClick="ga(\'send\', \'event\', \'CPA\', \'order\', \'learn_price\');">{$props->get("lng.exact_price")}</a>
+                            {/if}
+                        </em>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {/if}
+
+    <section class="b-product--grid">
+        <div class="b-content-title">
+            <h2 class="b-content-title__text">{$TEXT_TITLE_FOR_SIMILAR}</h2>
+        </div>
+        <div class="clearfix">
+            <ul class="b-prices">
+                {if $SIMILAR}
+                    {foreach from=$SIMILAR item=item key=key}
+                        <li class="b-prices-item">
+                            <a href="{$item.href}" title='{$item.product_name|escape}'>{$item.product_name|escape}</a>
+                            <div class="b-prices__date">
+                                {if $item.price_native != '0.00'}
+                                    {$item.price_native} {$props->get('finance.native_currency_txt_code')}
+                                {else}
+                                    {$item.price_foreign} {$scurrency}
+                                {/if}
+                            </div>
+                        </li>
+                    {/foreach}
+                {/if}
+            </ul>
+    </section>
+
+    <script>
+
+        {if $PRICE}
+        setting[{$PRICE.price_id}] = { "prod_name": "{$PRICE.name|escape}", "id": "{$PRICE.price_id}", "c": "{$PRICE.code}", "whom" : "{$company.name|escape}", is_paid: "{$company.isPaid|intval}"};
+        {/if}
+
+        {if $SIMILAR}
+        {foreach from=$SIMILAR item=item key=key}
+        {if $PRICE.price_id == $item.price_id}
+        {else}
+        setting[{$item.price_id}] = { "prod_name": "{$item.product_name|escape}", "id": "{$item.price_id}", "c": "{$item.code}", "whom" : "{$company.name|escape}", is_paid: "{$company.isPaid|intval}"};
+        {/if}
+        {/foreach}
+        {/if}
+    </script>
+    {if ( $props->get('locale.language') == 'uk' || $props->get('locale.language') == 'ru' )}
+        <div id="jsCloseConfirm" class="hidden">{$props->get('lng.onbeforeunload_alert_title')}<br><br>{$props->get('lng.onbeforeunload_alert_fill_and_send')}.<br><br>{$props->get('lng.onbeforeunload_alert_get_response')}.</div>
+    {/if}
+{/block}

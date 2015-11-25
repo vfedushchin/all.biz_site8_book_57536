@@ -1,0 +1,334 @@
+
+
+{extends file="../index.html"}
+{block name=article}{strip}
+
+
+        <div class="row">
+            <div id="content" class="col-sm-9 col-sm-12 ">
+            
+            <div class="breadcrumb">
+            {if $BREADCRUMBS}
+                {foreach from=$BREADCRUMBS item=item key=key}
+                   <span class="b-bread-list__item" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                        {if not $item@last}
+                            <span class="b-link b-bread-list__link" onclick="location.href='{$item.href}'" title="" itemprop="url"><span itemprop="title">{$item.name|escape:"html"}</span></span><span class="b-bread-list__separator"></span>
+                        {else}
+                          {if $item@first}<strong>{/if}<span class="b-bread-list__link" title="" itemprop="title">{$item.name|escape:"html"}</span>{if $item@first}</strong>{/if}
+                        {/if}
+                      </span>
+                {/foreach}
+            {/if}
+ 
+            </div>
+
+                <div class="product-info">
+                    <div class="row">
+
+                      <div class="col-md-6 col-sm-12">
+                            <div id="default_gallery" class="left spacing">
+                                
+                                 {if $MORE_PHOTOS}
+                                    <div class="image-additional">
+                                        <ul id="image-additional">
+                                        <li>
+                                           <a href="#" data-image="{$ART.img_src}" data-zoom-image="{$ART.img_src}">
+                                                <img  src="{$ART.img_src_small}" />
+                                            </a>
+                                        </li>
+                                        {foreach from=$MORE_PHOTOS item=item key=key}
+                                            <li>
+                                                <a href="#" data-image="{$item.img_src}" data-zoom-image="{$item.img_src}">
+                                                    <img  src="{$item.img_src_small}" />
+                                                </a>
+                                            </li>
+                                               {/foreach}
+                                        </ul>
+                                    <div class="clear"></div>
+                                </div>
+                                 {/if}
+
+                                 <div class="image">
+                                     <img id="zoom_01" data-zoom-image="{$ART.img_src}" src="{$ART.img_src}" alt="{$ART.product_name|escape}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-12">
+                            <h1>{$ART.product_name}</h1>
+                            <div class="price">
+                                <span class="text-price">Цена:</span>
+                                <span class="price-new">{$ART.price_native} {$ART.native_currency_txt_code}</span>
+                            </div>
+                            <div class="cart">
+                                <div class="prod-row">
+                                    <div class="cart-top">
+                                        <a class="js__order_BTN btn btn-buy button-prod  {if !$IS_SHOP_CART_ACTIVE OR $TYPE <> 'goods'}b-button_type_order{/if} b-show_other" onClick="ga('send', 'event', 'CPA', 'order', 'order_button'); {if $IS_SHOP_CART_ACTIVE AND $TYPE eq 'goods'
+                                                    }ga('send', 'event', 'cart', 'add_to_cart'); addtocart({$ART.id}, '{$smarty.const.COUNTRY_CODE}', 1); return false;{/if}" {if !$IS_SHOP_CART_ACTIVE}href="javascript: //" {/if} id="{$ART.id}">
+                                            <i class="fa fa-shopping-cart"></i>В корзину
+                                        </a>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {* -------------------- кнопка посмотреть в каталоге --------------------*}
+                            {if (!empty($ART.mainHrefToCatalog))}
+                              <div class="b-product--card-descr__view">
+                                <a href="{$ART.mainHrefToCatalog}" class="b-link">{$props->get('lng.view_in_catalog')}</a>
+                              </div>
+                            {/if}
+
+
+                            {* -------------------- дата добавления и обновления товара--------------------*}
+                            <div class="b-product--card-descr__date">
+                               {$props->get('added')}: {$ART.add_date},&nbsp;
+                               {$props->get('updated')}: {$ART.update_date}
+                            </div>
+
+
+
+                        </div>
+
+
+                        <div class="col-sm-12">
+                            <div class="description">
+                                {if ($ART.description)}
+                                <div itemprop="description">{$ART.description}</div>
+                                {else} {if !$props->get('locale.is_native_language')}
+                                <div>{$ART.product_name|escape}
+                                    <br><a class="b-link" href="{$ART.url_withoutLang}">{$props->get('lng.description_available_on_languages')}: {$NATIVE_LANGUAGE}</a>&nbsp;
+                                    <a class="b-link" target=_blank href="{$HREF_TRANSLATOR}">{$props->get('lng.online_translator')}</a>
+                                </div>
+                                {/if} {/if} {if ($ART.technical_data)} {$ART.technical_data} {/if} {if ($ART.drawing_description)} {$ART.technical_data} {/if}
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+              
+              {if $SIMILAR}
+            <div id="column-right" class="col-sm-12">
+              <div class=" bestsellers">
+              <div class="box-heading">Похожие товары</div>
+                <div class="box-content">
+
+                        <div class="box-product">
+                    <ul class="row">
+                     {$n=1}
+                     {foreach from=$SIMILAR item=item key=key}
+                                  <li class="similar last_line col-sm-4 col-xs-6">
+
+                                      <div class="product-thumb transition options  ">
+                                        <div class="image">
+                                            <a href="{$item.href}" style="background-image: url('{$item.img_src}')" class="product-bg-container">
+                                                <!-- <img alt="{$item.product_name}" src="{$item.img_src}"> -->
+                                            </a>
+                                        </div>
+                                        <div class="caption">
+                                            <div class="name"><a href="{$item.href}">{substr($item.product_name|escape:"htmlall",0,270)}... </a></div>
+                                            <!-- <div class="description">
+                                                {substr($item.description,0,570)}</div> -->
+                                        </div>
+                                        <div class="cart-button">
+                                            <div class="price">
+                                                {$item.price_native} {$item.currency}
+                                            </div>
+                                            {if $IS_SHOP_CART_ACTIVE && $item.price_native > 0}
+                                            <a id="{$item.id}" class="product-btn-add button addToCart b-button_type_order" onClick="ga('send', 'event', 'CPA', 'order', 'order_button'); ga('send', 'event', 'cart', 'add_to_cart'); addtocart({$item.id}, '{$smarty.const.COUNTRY_CODE}', 1); return false;">
+                                                <span>{$props->get('lng.add_to_card')}</span>
+                                                <i class="fa fa-shopping-cart"></i> Купить
+                                            </a>
+                                            {else} {if $item.message_popup_link}
+                                            <a class="product-btn-add button addToCart b-button_type_order js-message-form-popup" data-href="{$item.message_popup_link}?force_order=1">
+                                                <span>{$props->get('lng.order')}</span>
+                                                <i class="fa fa-shopping-cart"></i> Купить
+                                            </a>
+                                            {else}
+                                            <a id="{$item.id}" href="javascript: //" class="product-btn-add button addToCart b-button_type_order js-button_type_order b-show_other" onClick="trackMe('{$typeOfPage}', 'order', 'Click');ga('send', 'event', 'CPA', 'order', 'order_button');">
+                                                <span>{$props->get('lng.order')}</span>
+                                                <i class="fa fa-shopping-cart"></i> Купить
+                                            </a>
+                                            {/if} {/if}
+                                        </div>
+                                    </div>
+
+                                 </li>
+
+                        {if ($n>=5)}
+                            {break}
+                        {/if}
+                        {$n=$n+1}
+
+                        {/foreach}
+                     </ul>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            {/if}
+            </div>
+                </div>
+
+
+
+                 <aside id="column-right" class="col-sm-3">
+                        <div class="box account">
+                        <div class="box-heading">Меню</div>
+                        <div class="box-content">
+                            <ul class="acount">
+
+
+
+                                  <li >
+                                  <a  href="{$URL_LNG_ADD}/"><i class="fa fa-angle-right"></i>
+{$props->get('lng.main')}</a>
+                                    </li>
+                                {*/Главная*}
+                              {foreach from=$MENU item=item key=key}
+                             
+                    {if $item.menu}
+                        {if $key == $CURRENT_MENU_ID}
+                            {$page_id = $item.page_id} 
+                        {/if}
+                        {if $key == 'isGoods' || $key == 'isService'} {** меню для товаров и услуг (с деревом) **}
+                            <li class="sf-menu-item">
+                                <a href="{$item.href}" class="b-left-menu__link sf-with-ul" title=""><i class="fa fa-angle-right"></i>
+{$item.name}</a>
+                                {if $item.byGroups}
+                                {if ($key == 'isGoods' and isset($CUSTOM_GOODS)) or ($key == 'isService' and isset($CUSTOM_SERVICES)) }
+                                        {* ===  Кастомное меню START === *}
+                                        {if $key == 'isGoods'}
+                                            {assign var="groups_part_url" value='/my-goods/'}
+                                        {else}
+                                            {assign var="groups_part_url" value='/my-services/'}
+                                        {/if}
+                                            <div class="sf-mega" >
+                                        <ul class="b-left-submenu sf-mega-section" id="sul_{$key}">
+                                            {foreach from=$item.byGroups item=value key=prod_id}
+                                                <li class="b-left-submenu-item">
+                                                    <a href="{$groups_part_url}{$value.main.seo_url}" class="b-left-submenu__link"><i class="fa fa-angle-double-right"></i>
+
+                                                        {$value.main.group_name}&nbsp;
+                                                        <i class="b-left-submenu__qty">{$value.main.count_child}</i>
+                                                    </a>
+                                                </li>
+
+                                                {if isset($value.child)}
+                                                    <ul class="b-left-submenu">
+                                                        {foreach from=$value.child item=child_value key=child_prod_id}
+                                                            <li  class="b-left-submenu-item">
+                                                                <a href="{$groups_part_url}{$child_value.seo_url}" class="b-left-submenu__link"><i class="fa fa-angle-double-right"></i>
+
+                                                                    {$child_value.group_name}&nbsp;
+                                                                    <i class="b-left-submenu__qty">{$child_value.count}</i>
+                                                                </a>
+                                                            </li>
+                                                        {/foreach}
+                                                    </ul>
+                                                {/if}
+                                            {/foreach}
+                                        </ul>
+                                        </div>
+                                        {* === Кастомное меню END ===  *}
+                                    {else}
+                                        {* СТандартное меню START *}
+                                        <div class="sf-mega" >
+                                        {if (COUNT($item.byGroups)>$LIMIT_MENU_GROUPS)}
+                                                <span class="b-left-submenu__link c_toggle_link js-toggle" data-toggleclass="c_hidden" data-placeholder="{$props->get('lng.close_list')}" data-target="menu_hidden_{$key}"><i class="fa fa-plus"></i></span>
+                                            {/if}
+                                        <ul class="b-left-submenu sf-mega-section" id="sul_{$key}">
+                                            {if $CURRENT_GROUP_ID[$key]} {** выбраная группа товара\услуг вверху **}
+                                                <li class="b-left-submenu-item">
+                                                   <a href="{$item.byGroups[$CURRENT_GROUP_ID[$key]].href}"  class="b-left-submenu__link" title=""><i class="fa fa-angle-double-right"></i>
+
+                                                        {$item.byGroups[$CURRENT_GROUP_ID[$key]].group_name}&nbsp;<i class="b-left-submenu__qty">{** кол. товаров в группе **} {$item.byGroups[$CURRENT_GROUP_ID[$key]].count}</i>
+                                                    </a>
+                                                </li>
+                                            {/if}
+                                            {foreach from=$item.byGroups item=value key=prod_id} {** далее все группы товара\услуг БЕЗ выбраной **}
+                                                {if $CURRENT_GROUP_ID[$key] <> $prod_id}
+                                                    <li class="b-left-submenu-item {if $value@iteration>$LIMIT_MENU_GROUPS}c_hidden" data-toggle="menu_hidden_{$key}"{else}"{/if}>
+                                                       <i class="fa fa-angle-double-right "></i> <a href="{$value.href}" class="b-left-submenu__link" title="">
+                                                            {$value.group_name}&nbsp;
+                                                            <i class="b-left-submenu__qty">{$value.count}</i> {** кол. товаров в группе **}
+                                                        </a>
+                                                    </li>
+                                                {else}
+                                                    {if $value@iteration>$LIMIT_MENU_GROUPS}
+                                                        {* для переключалки развернуть/свернуть надо увеличить лимит, иначе будет пропадать последний пункт в меню перед кнопочкой "развернуть", плохо что здесь логика, но пока ничего лучше не придумал *}
+                                                        {assign var=LIMIT_MENU_GROUPS value=$LIMIT_MENU_GROUPS+1}
+                                                    {/if}
+                                                {/if}
+                                            {/foreach}
+                                            
+                                        </ul>
+                                        </div>
+                                    {/if}
+                                    {* СТандартное меню END *}
+                                {/if}
+                           </li>
+                        {else}
+                            {** обычные пункты меня, аля новости, прайсты итд **}
+                            <li class="">
+                                <a class="b-left-menu__link" href="{$item.href}" ><i class="fa fa-angle-right"></i>
+{$item.name}</a>
+                           </li>
+                        {/if}
+                    {/if}
+                   
+                {/foreach}
+
+                         </ul>
+                        </div>
+                    <nav class="b-left-menu">
+                {*Главная*}
+                
+
+
+                <div class="b-counters-side" style="display: none;">
+                    {if $CURRENT_MENU_ID == 'contacts'}{$page_id = 381}{elseif (!$page_id)}{$page_id = 8}{/if}
+
+                    {if $DSP_CLICK_COUNTER_2}
+                        <script language="javascript">
+                            counter_url = '{$COUNTER_URL}&reff='+escape(document.referrer)+'&rand='+Math.random();
+                            counter_img = new Image(1, 1);
+                            counter_img.src = counter_url;
+                            document.write('<img src="' + counter_img.src + '" width="1" height="1" border="0">');
+                        </script>
+                        <noscript>
+                            <img src="{$COUNTER_URL}&ts={$microtime}" width="1" height="1" border="0">
+                        </noscript>
+                    {/if}
+                    {if ($PUBLIC_STATIC_URL)}<a href="{$PUBLIC_STATIC_URL}">{/if}
+                        <script language="javascript">
+                            var counter_url = 'http://counter.{$MAIN_DOMAIN}/dsp_representation_counter.php?page_id={$page_id}&tld={$company.tld}&tsid={$company.id}&resource={$props->get('locale.country_code')|lower}&lng={$props->get('locale.language')}&lng_id={$props->get('locale.language_id')}&size=210&reff='+escape(document.referrer)+'&rand='+Math.random();
+                            document.write('<img src="'+counter_url+'" width="210" height="31" border="0">');
+                        </script>
+                        <noscript>
+                            <img src="http://counter.{$MAIN_DOMAIN}/dsp_representation_counter.php?page_id={$page_id}&tld={$company.tld}&tsid={$company.id}&resource={$props->get('locale.country_code')|lower}&lng={$props->get('locale.language')}&lng_id={$props->get('locale.language_id')}&size=210&ts={$microtime}" width="210" height="31" border="0">
+                        </noscript>
+                        {if ($PUBLIC_STATIC_URL)}</a>{/if}
+
+                    {include file="/www/web/templates/common/counters_minisite_side.html"}
+                </div>
+                
+            </nav>
+            </div>
+                </aside>
+                
+                
+            </div>
+            
+
+
+
+
+
+
+
+
+{/strip}{/block}

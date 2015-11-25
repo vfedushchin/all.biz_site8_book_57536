@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+    {foreach from=$list key=key item=item}
+    <url>
+        <loc>http://{$HOST}{$item.href}</loc>
+        <lastmod>{$LASTMOD}</lastmod>
+        <priority>{$PRIORITY}</priority>
+        {if $item.is_image}
+        <image:image>
+            <image:caption>{$item.product_name|htmlspecialchars}</image:caption>
+            <image:loc>{$item.img_src}</image:loc>
+        </image:image>
+        {foreach from=$item.more_images key=key2 item=item2}
+        <image:image>
+            <image:loc>{$item2.img_src}</image:loc>
+        </image:image>
+        {/foreach}
+        {/if}
+    </url>
+    {/foreach}
+</urlset>
+{if $debug}
+<!-- {$time} -->
+{/if}
